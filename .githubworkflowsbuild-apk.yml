@@ -15,7 +15,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # Install Android SDK + accept licenses
+      # Install Android SDK & accept licenses
       - uses: android-actions/setup-android@v3
 
       # Use hosted Gradle (no gradlew wrapper needed)
