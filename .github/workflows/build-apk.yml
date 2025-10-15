@@ -10,20 +10,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Java 17 is required by recent Android Gradle Plugin
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
 
+      # Install Android commandline tools
       - uses: android-actions/setup-android@v3
 
+      # Explicitly install the SDK components your project needs
+      - name: Install Android SDK packages
+        run: |
+          sdkmanager --install \
+            "platform-tools" \
+            "platforms;android-34" \
+            "build-tools;34.0.0"
+          yes | sdkmanager --licenses
+
+      # Use hosted Gradle (NO gradlew). Disable caches to avoid 400 errors.
       - uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.6
+          cache-disabled: true
 
+      # Build your release APK
       - name: Build release APK
-        run: gradle assembleRelease
+        run: gradle assembleRelease --no-daemon --stacktrace
 
+      # Publish the APK as an artifact
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
