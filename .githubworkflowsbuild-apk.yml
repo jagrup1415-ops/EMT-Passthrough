@@ -18,7 +18,7 @@ jobs:
       # Install Android SDK + accept licenses
       - uses: android-actions/setup-android@v3
 
-      # Use a hosted Gradle (no wrapper required)
+      # Use hosted Gradle (no gradlew wrapper needed)
       - uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.6
@@ -31,5 +31,3 @@ jobs:
         with:
           name: QuestARLauncher-APK
           path: app/build/outputs/apk/release/*.apk
-
-
